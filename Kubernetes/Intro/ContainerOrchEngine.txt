@@ -1,0 +1,25 @@
+COE automates deploying, scaling and managing containerized applications on a group of servers.
+COE eg. Kubernetes , docker swarm and apache mesos
+
+COE - FEAUTRES
+1. Clustering
+2. Scheduling
+3. Scalability
+4. Load Balancing
+5. Fault Tolerance
+6. Deployment
+
+
+			TOP 3 COE's
+1. Marathon by Apache Mesos
+2. Docker Swarm
+3. Kubernetes
+4. Cloud specific COE's
+
+
+				KUBERNETES	
+
+linux os 
+Managed  by CNCF
+
+

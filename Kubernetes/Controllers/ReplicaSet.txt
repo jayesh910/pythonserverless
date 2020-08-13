@@ -1,0 +1,66 @@
+Replicaset ensures specific no. of pods are running  at any time.
+POds are deleted terminated or get fails and RS ensures to maintain the no. of pods running
+Link between replicaset and pod is labels.
+Replicaset is next generation of replication controller.
+Both serves same purpose only difference is selectors.
+RS uses set-based selectors whereas RC uses equality-based selectors.
+Labels are key-value pair.
+
+	Equality Based Selectors: 
+Operators: =, ==, !=
+Examples: environment = production
+tier != frontend	
+Commandline: kubectl get pods -l environment=production
+selector:
+environment: production
+tier: frontend
+supports: services,RC
+	
+
+	Set Based: 
+Operators : in ,notin ,exists
+Examples: environment in (production,qa)
+tier notin (frontend, backend )
+commandline: kubectl get pods -l environment in (production)
+selector:
+matchExpressions:
+- {key: environment, operator: In,values:[prod,qa]}
+- {key: tier,operator:NotIn, values: [frontend,backend]}
+supports: Job, Deployment, ReplicaSet, and Daemon Set
+
+=====================================================================
+
+Create manifest file:
+
+
+apiVerssion: apps/v1	#for rc its v1
+kind: ReplicaSet
+metadata: 
+  name: nginx-rs
+spec:
+  replicas: 3
+  selector:		#for rs selector has different elements
+    matchLabels:
+      app: nginx-app
+    matchExpressions:
+      - {key: tier,operator: In,values: [frontend]}
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-app
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+        - containerPort: 80
+
+
+>>> kubectl get rs -l tier=frontend
+
+Scale up replica:
+>>> kubectl scale rs nginx-rs --replicas=5
+
+>>> kubectl delete -f nginx-rs.yaml

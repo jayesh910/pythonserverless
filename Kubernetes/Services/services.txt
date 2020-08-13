@@ -1,0 +1,80 @@
+To deploy web app:
+how to expose front end web app
+how to connect front end to backend database
+If pod dies the ip changes, then how can we connect again dynamically.
+
+frontend service: service between user and frontend
+backend service: service between frontend and backend
+
+
+Types of services:
+1. Cluster IP service
+2. NodePort
+3. Loadbalancer
+
+=========================================================================================================
+
+						NodePort Services
+						`````````````````
+To expose on outside world, we use nodeport service.
+
+You get nodeIp and nodePort.
+Nodeport range: 30000 - 32767
+
+There are 3 types of ports in Node:
+1. NodePort(30000-32767)
+2. Port(Its a service port which is created by nodeport)
+3. TargetPort(Actual port of pod in node which has frontend app)
+
+
+How it works?
+1. Application port is called as target port. This application has label defined in manifest file
+2. The port of service is pointed to target port. The service file has selector which helps to identify having pods with label.
+3. Thus service will help nodeport to expose the application to outside world.
+
+
+---------------------------
+		DEMO
+---------------------------
+
+
+
+
+Created service file for spring-app-svc.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-app-svc
+  labels:
+    app: spring-app
+spec:
+  selector:
+    app: spring-app
+  type: NodePort
+  ports:
+  - nodePort: 31111
+    port: 80
+    targetPort: 8085
+
+------------------------
+After creating service ,create pod file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-app-pod
+  labels:
+    app: spring-app
+spec:
+  containers:
+  - name: spring-app-container
+    image: jayesh910/docker-springboot
+    ports:
+    - containerPort: 8085
+------------------------------
+
+>> kubectl create svc spring-app-svc.yaml
+>> kubectl create -f spring-app-pod.yaml
+
+GOTO Nodeport ip and check for the output.

@@ -1,0 +1,69 @@
+Upgrade your app with v1 to v2?
+Upgrade with zero downtime
+upgrade sequentially, one after other ?
+Pause and resume upgrade process?
+Rollback upgrade to previous stable release?
+
+Deployment!!
+
+Deployment is all about updates and rollback.
+
+Deployment = Pods + ReplicaSet
+
+Deployment contains pod data and replicas to be maintained.
+
+Features: Multiple replicas, upgrade, rollback, scale up or down , Pause and resume.
+
+Deployment Types:
+1. Recreate: Shutting down v1 and then creating new version. Requires downtime.
+2. RollingUpdate: Its a default strategy in k8s. It will take one container at a time and upgrade it.
+3. Canary: it is use if you dont want to update all containers . suppose you want to update only 2/10 pods to test new version on it, use canary
+4. Blue/Green: It will create new instances which is green and will have updated vrsion, if testing is successfull all the network is shifted to green deployment from blue .
+
+=========================================
+MANIFEST FILE:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-app
+  template:
+    metadata: 
+    spec:
+
+>>> kubectl create -f nginx-deploy.yaml
+>>> kubectl get deploy -l app=nginx-app
+>>> kubectl get rs -l app=nginx-app
+
+Update deployment:
+2 ways: 
+>>> kubectl set image deploy nginx-deployment nginx-container=nginx:1.9.1
+>>> kubectl edit deploy nginx-deployment
+
+
+>>> kubectl rollout status deployment/nginx-deployment
+
+>>> kubectl get deploy
+
+
+To rollback to previous version:
+>>> kubectl rollout status deploy deployment/nginx-deployment		#Will give you the reason why this deploy has failed.
+>>> kubectl rollout history deploy deployment/nginx-deployment		#Gives the history of each version
+>>> kubectl rollout undo deployment/nginx-deployment			#Rollback the changes to previous version
+>>> kubectl rollout status deployment/nginx-deployment			
+
+Scaling Up: 
+>>> kubectl scale deployment nginx-deployment --replicas=5
+>>> kubectl get deploy
+
+Same for scale down.
+
+TO DELETE: 
+>>> kubectl delete -f deployment/nginx-deployment

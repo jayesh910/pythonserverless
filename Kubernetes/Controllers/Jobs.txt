@@ -1,0 +1,53 @@
+Run tasks till completion or
+at scheduled time like taking backup of database everyday.
+JOBS 
+
+jOBS is a controller which defines task to be completed.
+JOBS is specially used for batch processing .
+
+ 2 types of Jobs are present: 
+
+	1. run to completion (Jobs)[When task is executed completely the job will shut down by itself][Controller will get the exit code 0 when task is done.][We have to shut the pods manually.]
+	2. Scheduled (CronJob)[Purpose is to basically delete all the logs and clear space.]
+
+1. Run to completion
+	-Each job creates one or more pods.
+	-Ensures they are successfully terminated.
+	-Job controller restarts or rescheduled if a pod or node fails during execution.
+	-You are responsible to handle the pods .
+	-Can run multiple pods in parallel.
+USE CASES:
+	-One time initialization of resources 
+	-Multiple workers to process messages in queue.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Config FIle:
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+	name: countdown
+spec:
+	template:
+		metadata:
+			name: countdown
+		spec:
+			containers:
+			-	name: counter
+				image: centos: 7
+				command:
+				- "bin/bash"
+				- "-c"
+				- "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i;done"
+			restartPolicy: Never
+
+##This job will print 9 to 1 then the pod will die as tasks gets completed. After that it is not restarted.
+>>> kubectl create -f countdown-jobs.yaml
+>>> kubectl get jobs
+>>> kubectl get po
+>>> kubectl logs countdown-brzdt
+
+

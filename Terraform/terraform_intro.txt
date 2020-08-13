@@ -1,0 +1,10 @@
+1. Providers
+2. Resources
+	- AWS provider
+	- Resource
+	- Variables
+	- input type(sg, instance type)
+Terraform plan - is a command
+Terraform apply - Apply all the changes in the script
+Terraform destroy - delete all your changes
+Terraform init - Will download all the dependencies of AWS provider.

@@ -1,0 +1,71 @@
+What is kubernetes?
+
+Manages containers apps @ large scale including :
+cluster management, scheduling, service discovery monitoring, SECRETS management & more
+
+Born @ Google and they donated to CNCF.
+
+BORG - container manager of google.inc
+Kubernetes is default COE in google cloud.
+
+
+
+						KUBERNETES ARCHITECTURE :
+
+1. High-level overview
+2. Kubernetes Master
+3. Worker Node
+4. Kubernetes architecture
+5. Terminology
+
+
+1. High Level : 
+ 
+Kubernetes arch. consists of atleast one master node and multiple worker nodes.
+Kubernetes supports upto 5000 worker nodes per cluster.
+
+Nodes are also called as minions. 
+
+	POD - Scheduling unit in k8s
+Each pod consists of 1 or more containers.
+Manage container through pods.
+
+	Master - responsible for managing whole cluster.
+monitors health chck of nodes.
+if worker fails , it manages to switch to healthy node.
+
+
+	Kubernetes Master 
+Co-ordinates with all the nodes and keep your application running.
+
+4 Primary Components : 
+	1. API server: Kind of gatekeeper for entire cluster. If you want you to CRUD any k8s object , it has to go through API server.
+It validates the API calls from pods, replicn controller , deployments 
+Exposes API's for various operation.
+Kubectl is used to interact with API server to perform operations.
+
+	2. Schedular: Physically scheduling pods across various nodes.
+Depending on how you mention in file.
+
+	3. Control manager : Node, Replication , endpoint and Service account and token controller.
+Responsible for health of applications. Ensures that appln is running.
+
+	4. ETCD: Distributed key-value database
+Stores current cluster state at any time.
+All components can contact to state of the cluster 
+
+	Kubernetes Worker Node
+Every node must run any container runtime such as docker or rocket.
+
+	1. Kubelet: Primary agent that runs on each worker node inside cluster.
+It ensures that the pod mntion in podspec is healthy and running .
+In case if it notices that there is issue , it tries to restart the pod on the same node.
+
+	2. Kube-proxy: Responsible for maintaining internet n/wk config.
+Also exposes services to the outside world. It's core network component inside k8s.
+
+	3. Pods: Consists of 1 or more container.
+We can deploy multiple dependant container .
+
+	4. Containers: Provide runtime env. for application to run .
+Dsined to run microservices applicn.

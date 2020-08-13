@@ -1,0 +1,25 @@
+what is docker?
+Dock + worker
+build,ship and run applicaation
+
+docker image is op of build phase.
+we can share this with team and others.
+
+share images -> dockerhub, dockerstore
+dockerstore -> contains genuine and commercial images
+dockerhub -> contains community images
+
+docker run
+after running , creates container
+
+DOCKER = basically it gives environment to create, run and build application .
+
+			INFRASTRUCTURE STACK
+
+
+			App1 App2 App3 App4...
+			     DOCKER ENGINE
+			======================
+			HOST OS
+			Physical machine or VM
+

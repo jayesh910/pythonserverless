@@ -1,0 +1,61 @@
+							Replication Controller
+							~~~~~~~~~~~ ~~~~~~~~~~
+
+RC ensures that specified n. of pods are running at any time.
+	- if excess pods, it will kill and vice versa
+
+The link between RC and pods is "labels"
+Labels is used by RC to identify pods.
+
+Replication controller is reffered as rc or rcs
+Creating a rc with count of 1 ensure that a pod is always available.
+
+Advantage: 	1. High availability 		2. Load balancing
+
+Replication controller is old, it is replaced by new ReplicaSet
+Difference is RC supports equality based selectors whereas RS suppots set-based selectors.
+
+===================================================================================================
+
+Create a manifest file for RC:
+
+apiVersion: v1 			#For RC apiVersion is v1
+kind: ReplicationController
+metadata:
+  name: nginx-rc		#name of the objects
+  				#label 
+spec:				#replica has 2 imp keys - replicas, selector and template
+  replicas: 3
+  selector:
+    app: nginx-app		#selector is used to select the pods which has same name as labels.
+  template: 			#This is same as pod manifest file
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+        - containerPort: 80
+
+
+			In RS , we can define selector using set-based selector
+
+  selector:			#we use matchLabels and matchExpressions
+    matchLabels:
+      app: nginx-app
+    matchExpressions:
+
+
+Create and display:
+
+>>> Kubectl create -f nginx-rc.yaml
+>>> kubectl get pods
+>>> kubectl get po -l app=nginx-app
+
+
+-- To scale up pods:
+>>> kubectl scale rc nginx-rc --replicas=5
+    

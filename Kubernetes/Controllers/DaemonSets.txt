@@ -1,0 +1,33 @@
+Running one pod on every node.
+inside RS , nodes are deployed unequally.
+Daemonsets ensures that atleast one pod is running in each node . 
+The pods are garbage collected when deleted.
+
+USE CASES: 
+Deploying applications like Node monitoring,
+			    Log collection,
+			    Storage Daemons.
+
+-----------------------------------------------------------------------------------------------
+
+Config file.
+
+#fluentds.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+	name: fluentds
+	labels:
+
+spec:
+	template:
+		metadata:
+			labels:
+				name: fluentd
+		spec:
+			containers:
+			- name: fluentd-container
+			  image: <image-name>
+		selector:
+			matchLabels:
+				name:fluentd

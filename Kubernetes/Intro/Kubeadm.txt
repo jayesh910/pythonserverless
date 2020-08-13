@@ -1,0 +1,45 @@
+Kubeadm is a command line utility for installing configuring kberntes cluster.
+
+operations:
+
+1. kubeadm init : When you have to configure kube master
+2. kubeadm join : TO connect as worker node to master.
+3. kubeadm token : This command will help you generate tokens
+4. kubeadm version : prints the version of kubernetes
+5. kubeadm upgrade : we can upgrade the cluster and downgrade if necessary
+
+  
+Pre-reqs: 
+1. 3gb or more RAM
+2. 3 CPU or more
+3. Full n/wk connectivity
+4. Disable SWAP on all nodes
+5. Disable SELinux on all nodes.
+
+
+						STEPS for Kube Cluster:
+
+1. Create VM's which are part of k8s cluster (master and nodes)
+2. Disable SELinux and SWAP on all nodes.
+3. Install Kubeadm, kubelet, kubectl and docker on all nodes.
+	- Start and enable kubelet and docker on all nodes.
+4. Initialize the master node.
+5. Configure pod n/wk e.g. weave , flannel and calico
+6. Join worker node to master cluster.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

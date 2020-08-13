@@ -1,0 +1,92 @@
+				PODS
+
+1. What is pods?
+
+Atomic unit of scheduling
+like virtualization for VM
+docker for container
+kubernetes for pod
+
+
+POD deployment: 
+1. Write pod manifest file 
+2. API server deploys these pods and containers
+
+Containers are encapsulated inside the pod
+We create new pods with same containers to scaleup
+
+			Multicontainer pods
+
+Pod with two or more containers
+We can use this in scenario of ,if the container in pod needs helping container 
+Basically to communicate with same conttainers use this.	
+They can use same storage space.
+
+
+		POD Networking
+
+Once pod is deployed , it gets it's own IP address that is pod ip address.
+Within the pod each container is having same IP address but different ports.
+ 
+
+		Inter-pod communication
+
+The pods within same cluster can communicate with each other using network channel using flannel, weave or calico.
+
+		Intra-pod communication
+
+For multicontainer pod, they talk each other with shared local network.
+So, if you want to expose with outer world then use ports because IP are same.
+
+		LIFECYCLE of POD:
+
+1. Manifest file
+2. Schedule pod
+3. Pending state of pod
+4. Running state of pod
+5. Succeeded state of pod
+*. Failed state of pod 
+
+NOTE: You cannot revive died pod.
+
+
+
+			POD manifest file:
+
+We can write manifest file in YAML or json.
+
+4 imp terms in manifest file: apiVersion, kind , metadata, spec
+
+
+				Stages in kubernetes:
+
+	Alpha -> Beta -> Stable
+A stable apiversion does not contain alpha or beta in their names.
+
+
+Commands : 
+kubectl create -f <pod-file>.yaml
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods -o wide yaml
+kubectl desc pod nginx-pod
+
+kubectl exec -it nginx-pod -- /bin/sh
+kubectl delete pod nginx-pod
+
+
+TO EXPOSE TO NODE PORT:
+
+# Expose PODS using NodePort service
+kubectl expose pod nginx-pod --type=NodePort --port=80
+
+# Display Service and find NodePort
+kubectl describe svc nginx-pod
+
+# Open Web-browser and access webapge using 
+http://nodeip:nodeport/test.html
+
+# Delete pod & svc
+kubectl delete svc nginx-pod
+kubectl delete pod nginx-pod
+

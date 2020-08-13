@@ -1,0 +1,22 @@
+If you are using node port then to end user which IP address will you give to them.
+That's why load balancer is introduced which will allow to have only one ip address.
+They are not cheap.
+Solution to cost is ingress.
+ ===============================
+
+Manifest file:
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels: 
+    app: nginx-app
+spec:
+  selector:
+    app: nginx-app
+  type: LoadBalancer
+  ports:
+  - nodePort: 31000
+    port: 80
+    targetPort: 80
