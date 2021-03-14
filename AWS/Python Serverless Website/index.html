@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<script>
+			function myFunction() {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("my-demo").innerHTML = this.responseText;
+					}
+				};
+				xhttp.open("GET", "https://609eor18r3.execute-api.us-east-1.amazonaws.com/default/myPythonServerless", true);
+				xhttp.send();
+
+			}
+
+		</script>
+	</head>
+<body>
+	<div align="center">
+		<br>
+		<br>
+		<br>
+		<br>
+		<h1> <span id="my-demo">Hello Jayesh, click below to check if website works!</span></h1>
+		<button onclick="myFunction()">Click me</button>	
+	</div>
+
+	</body>
+</html>
